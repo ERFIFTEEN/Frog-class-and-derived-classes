@@ -1,0 +1,19 @@
+Cycle 1 (Habitat: pond):
+Poison Dart Frog reproduced! New population: 13
+Poison Dart Frog faced a threat! Population reduced to: 7
+Poison Dart Frog: Population=7, Habitat=rainforest, Alive=True
+American Bullfrog dominated territory! Reproduction rate increased to 0.70
+American Bullfrog reproduced! New population: 17
+American Bullfrog: Population=17, Habitat=pond, Alive=True
+Red-Eyed Tree Frog used camouflage! Immune to threats this cycle.
+Red-Eyed Tree Frog: Population=10, Habitat=rainforest, Alive=True
+
+Cycle 2 (Habitat: rainforest):
+Poison Dart Frog used toxicity! Survival rate increased to 0.80
+Poison Dart Frog: Population=7, Habitat=rainforest, Alive=True
+American Bullfrog migrated to wetland.
+American Bullfrog is less suited to wetland. Survival rate: 0.48
+American Bullfrog: Population=17, Habitat=wetland, Alive=True
+Red-Eyed Tree Frog reproduced! New population: 14
+Red-Eyed Tree Frog: Population=14, Habitat=rainforest, Alive=True
+...
