@@ -1,0 +1,118 @@
+import random
+import time
+
+class Frog:
+    def __init__(self, species, habitat, reproduction_rate, max_population, survival_rate):
+        self.species = species
+        self.habitat = habitat  # Preferred habitat (e.g., rainforest, pond)
+        self.reproduction_rate = reproduction_rate  # Number of offspring per cycle
+        self.population = 10  # Start with small population
+        self.max_population = max_population  # Carrying capacity
+        self.survival_rate = survival_rate  # Resistance to environmental threats (0 to 1)
+        self.alive = True
+
+    def reproduce(self):
+        """Simulate reproduction based on reproduction rate and habitat suitability."""
+        if self.alive:
+            offspring = int(self.population * self.reproduction_rate)
+            self.population = min(self.population + offspring, self.max_population)
+            print(f"{self.species} reproduced! New population: {self.population}")
+
+    def environmental_threat(self, threat_factor, current_habitat):
+        """Apply environmental threat (e.g., drought, predators) modified by habitat."""
+        habitat_modifier = 1.0 if current_habitat == self.habitat else 0.5
+        effective_survival = self.survival_rate * habitat_modifier
+        if random.random() > effective_survival * threat_factor:
+            self.population = max(0, self.population - int(self.population * 0.4))
+            print(f"{self.species} faced a threat! Population reduced to: {self.population}")
+            if self.population == 0:
+                self.alive = False
+                print(f"{self.species} has gone extinct!")
+        else:
+            print(f"{self.species} survived the threat!")
+
+    def migrate(self, new_habitat):
+        """Simulate migration to a new habitat, affecting survival."""
+        if self.alive:
+            print(f"{self.species} migrated to {new_habitat}.")
+            if new_habitat != self.habitat:
+                self.survival_rate *= 0.8  # Reduced survival in non-preferred habitat
+                print(f"{self.species} is less suited to {new_habitat}. Survival rate: {self.survival_rate:.2f}")
+
+    def status(self):
+        """Return current status of the frog species."""
+        return f"{self.species}: Population={self.population}, Habitat={self.habitat}, Alive={self.alive}"
+
+class PoisonDartFrog(Frog):
+    def __init__(self):
+        super().__init__(species="Poison Dart Frog", habitat="rainforest", 
+                        reproduction_rate=0.3, max_population=200, survival_rate=0.7)
+
+    def special_ability(self):
+        """Poison Dart Frogs use toxicity to deter predators, boosting survival."""
+        self.survival_rate = min(self.survival_rate + 0.1, 1.0)
+        print(f"{self.species} used toxicity! Survival rate increased to {self.survival_rate:.2f}")
+
+class Bullfrog(Frog):
+    def __init__(self):
+        super().__init__(species="American Bullfrog", habitat="pond", 
+                        reproduction_rate=0.5, max_population=500, survival_rate=0.6)
+
+    def special_ability(self):
+        """Bullfrogs aggressively compete, boosting reproduction temporarily."""
+        self.reproduction_rate += 0.2
+        print(f"{self.species} dominated territory! Reproduction rate increased to {self.reproduction_rate:.2f}")
+        self.reproduce()
+        self.reproduction_rate -= 0.2  # Reset after boost
+
+class TreeFrog(Frog):
+    def __init__(self):
+        super().__init__(species="Red-Eyed Tree Frog", habitat="rainforest", 
+                        reproduction_rate=0.4, max_population=300, survival_rate=0.8)
+
+    def special_ability(self):
+        """Tree Frogs use camouflage to avoid threats temporarily."""
+        print(f"{self.species} used camouflage! Immune to threats this cycle.")
+        self.survival_rate = 1.0  # Temporary immunity
+        time.sleep(1)  # Simulate hiding duration
+        self.survival_rate = 0.8  # Revert to normal
+
+def simulate_frog_populations(frog_list, cycles=5, threat_probability=0.4):
+    """Simulate frog populations over multiple cycles with random events."""
+    habitats = ["rainforest", "pond", "wetland"]
+    for cycle in range(cycles):
+        current_habitat = random.choice(habitats)
+        print(f"\nCycle {cycle + 1} (Habitat: {current_habitat}):")
+        for frog in frog_list:
+            if frog.alive:
+                # Randomly reproduce or use special ability
+                if random.random() < 0.6:
+                    frog.reproduce()
+                else:
+                    frog.special_ability()
+
+                # Randomly apply environmental threat
+                if random.random() < threat_probability:
+                    frog.environmental_threat(threat_factor=0.5, current_habitat=current_habitat)
+
+                # Randomly migrate to a new habitat
+                if random.random() < 0.2:
+                    new_habitat = random.choice(habitats)
+                    frog.migrate(new_habitat)
+
+                print(frog.status())
+            else:
+                print(f"{frog.species} is extinct.")
+
+# Main program
+if __name__ == "__main__":
+    # Create instances of different frog species
+    dart_frog = PoisonDartFrog()
+    bullfrog = Bullfrog()
+    tree_frog = TreeFrog()
+
+    # List of frogs to simulate
+    frog_populations = [dart_frog, bullfrog, tree_frog]
+
+    # Run simulation for 5 cycles
+    simulate_frog_populations(frog_populations, cycles=5, threat_probability=0.4)
