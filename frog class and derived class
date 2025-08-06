@@ -104,15 +104,4 @@ def simulate_frog_populations(frog_list, cycles=5, threat_probability=0.4):
             else:
                 print(f"{frog.species} is extinct.")
 
-# Main program
-if __name__ == "__main__":
-    # Create instances of different frog species
-    dart_frog = PoisonDartFrog()
-    bullfrog = Bullfrog()
-    tree_frog = TreeFrog()
 
-    # List of frogs to simulate
-    frog_populations = [dart_frog, bullfrog, tree_frog]
-
-    # Run simulation for 5 cycles
-    simulate_frog_populations(frog_populations, cycles=5, threat_probability=0.4)
