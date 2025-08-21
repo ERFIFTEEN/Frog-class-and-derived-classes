@@ -1,0 +1,5 @@
+
+                # Randomly migrate to a new habitat
+                if random.random() < 0.2:
+                    new_habitat = random.choice(habitats)
+                    frog.migrate(new_habitat)
