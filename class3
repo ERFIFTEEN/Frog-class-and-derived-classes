@@ -1,0 +1,9 @@
+class Frog:
+    def __init__(self, species, habitat, reproduction_rate, max_population, survival_rate):
+        self.species = species
+        self.habitat = habitat  # Preferred habitat (e.g., rainforest, pond)
+        self.reproduction_rate = reproduction_rate  # Number of offspring per cycle
+        self.population = 10  # Start with small population
+        self.max_population = max_population  # Carrying capacity
+        self.survival_rate = survival_rate  # Resistance to environmental threats (0 to 1)
+        self.alive = True
